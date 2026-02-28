@@ -13,7 +13,7 @@ app.use(express.json());
 
 const limiter = rateLimit({
   windowMs: 600 * 1000,
-  max: parseInt(process.env.RATE_LIMIT || '600'),
+  max: parseInt(process.env.RATE_LIMIT || '300'),
   standardHeaders: true,
   legacyHeaders: false,
   message: { error: 'Too many requests, please slow down.' },
@@ -69,7 +69,7 @@ app.post('/validate', auth, async (req, res) => {
 // Bulk validation  POST /validate/bulk  { "emails": ["a@b.com", ...] }
 app.post('/validate/bulk', auth, async (req, res) => {
   const { emails } = req.body;
-  const MAX_BULK = parseInt(process.env.MAX_BULK || '50');
+  const MAX_BULK = parseInt(process.env.MAX_BULK || '100');
   if (!Array.isArray(emails) || emails.length === 0) {
     return res.status(400).json({ error: '`emails` must be a non-empty array.' });
   }
