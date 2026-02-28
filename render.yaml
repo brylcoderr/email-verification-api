@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: email-validation-api
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: 3000
+      - key: NODE_ENV
+        value: production
+      # Uncomment and set a value to require an API key on all requests:
+      # - key: API_KEY
+      #   generateValue: true   # Render auto-generates a secure random value
+      - key: RATE_LIMIT
+        value: "600" # Max requests per minute per IP
+      - key: MAX_BULK
+        value: "50" # Max emails per /validate/bulk request
+    autoDeploy: true
